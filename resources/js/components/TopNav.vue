@@ -14,8 +14,6 @@
     <div id="navbarBasicExample" class="navbar-menu"  :class="{ 'is-active': !isActive }">
       <div class="navbar-start">
         <router-link class="navbar-item" :to="{ name: 'customers-index' }">Customers</router-link>
-
-        <router-link class="navbar-item" :to="{ name: 'customers-edit' }">Edit</router-link>
       </div>
     </div>
   </nav>

@@ -7,11 +7,6 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/customers/edit',
-      name: 'customers-edit',
-      component: () => import('./pages/customers/Edit.vue')
-    },
-    {
       path: '/customers',
       name: 'customers-index',
       component: () => import('./pages/customers/Index.vue')
