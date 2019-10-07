@@ -15,7 +15,7 @@ Vue.use(Buefy)
  ** Autoload BaseComponent in Base Folder using regexp
  require.context(directory, useSubdirectories = true, regExp = /^\.\/.*$/, mode = 'sync');
  ******************************************/
-const requireComponent = require.context(
+/*const requireComponent = require.context(
     './components/Base',
     false,
     /Base[A-Z]\w+\.(vue|js)$/
@@ -34,7 +34,7 @@ Vue.component(
     componentName,
     componentConfig.default || componentConfig // export default or fallback to module's root
 )
-});
+});*/
 
 
 new Vue({
