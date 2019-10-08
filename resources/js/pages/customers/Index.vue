@@ -188,9 +188,11 @@ export default {
 
         addCustomerToList: function(newCustomer){
             this.customers.push(newCustomer);
+            this.searchRecordInData();
         },
         updateCustomerOnList: function(updatedCustomer){
             Object.assign(this.customers[this.selectedCustomerIndex] ,updatedCustomer);
+            this.searchRecordInData();
         },
         
         searchRecordInData: function() {

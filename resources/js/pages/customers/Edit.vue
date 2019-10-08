@@ -1,6 +1,6 @@
 <template>
     <b-modal :active.sync="form.isVisible" :width="form.width" scroll="keep">
-        <form action="">
+        <form id="customerForm" action="">
             <div class="modal-card" style="width: auto">
                 <header class="modal-card-head">
                     <p class="modal-card-title">{{form.title}}</p>
@@ -8,25 +8,25 @@
                 <section class="modal-card-body">
                     <b-field label="First Name">
                         <b-input
-                            type="firstname"
+                            type="text"
                             icon-pack="fas"
                             icon="user"
                             v-model="customer.firstname"
                             placeholder="enter first Name"
-                            min="2"
-                            max="30"
+                            minlength="2"
+                            maxlength="30"
                             required>
                         </b-input>
                     </b-field>
                     <b-field label="Last Name">
                         <b-input
-                            type="lastname"
+                            type="text"
                             icon-pack="fas"
                             icon="user"
                             v-model="customer.lastname"
                             placeholder="enter last name"
-                            min="2"
-                            max="30"
+                            minlength="2"
+                            maxlength="30"
                             required>
                         </b-input>
                     </b-field>
@@ -42,20 +42,20 @@
                     </b-field>
                     <b-field label="Phone">
                         <b-input
-                            type="phone"
+                            type="text"
                             icon-pack="fas"
                             icon="phone"
                             v-model="customer.phone"
                             placeholder="enter phone"
-                            min="9"
-                            max="30"
+                            minlength="9"
+                            maxlength="30"
                             required>
                         </b-input>
                     </b-field>
                 </section>
                 <footer class="modal-card-foot">
                     <button class="button" type="button" @click="close()">Close</button>
-                    <button :class="form.buttonClass" class="button" @click.prevent="sendForm()">{{form.buttonTitle}}</button>
+                    <button id="customerFormSubmitBtn" :class="form.buttonClass" class="button" @click.prevent="validateForm()">{{form.buttonTitle}}</button>
                 </footer>
             </div>
         </form>
@@ -71,8 +71,9 @@ export default {
         close: function() {
             this.form.isVisible=false;
         },
-        sendForm: function() {
+        sendForm: function(ev) {
             this.loading = true;
+
             if(this.form.action === "edit") {
                 CustomerService.updateCustomer(this.customer.id,this.customer)
                 .then(response => {
@@ -109,7 +110,7 @@ export default {
                         position: 'is-top',
                         type: 'is-success'
                     })
-                   
+                
                 })
                 .catch(error => {
                     this.$buefy.toast.open({
@@ -120,7 +121,30 @@ export default {
                     })
                 })
             }
+            
+        },
+        validateForm: function() {
+            var customerFormButton = document.getElementById('customerFormSubmitBtn');
+            customerFormButton.disabled = true;
+            
+            var customerForm = document.getElementById('customerForm');
+            var customerFormInputFields = customerForm.getElementsByTagName('input');
+            let is_valid = true;
+
+            for (let index = 0; index < customerFormInputFields.length; index++) {
+                if(!customerFormInputFields[index].validity.valid) {
+                    is_valid = false;
+                }
+                    
+            }
+            customerForm.reportValidity();
+            if(is_valid && customerForm.checkValidity())
+                this.sendForm();
+            else {
+                customerFormButton.disabled = false;
+            }
         }
     }
+    
 }
 </script>
